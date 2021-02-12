@@ -5,6 +5,19 @@ include(GNUInstallDirs)
 
 project(Core)
 
+set(CONV_HEADERS
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/Irc
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcCommand
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcCommandFilter
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcConnection
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcCore
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcGlobal
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcMessage
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcMessageFilter
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcNetwork
+        ${LibCommuni_INCLUDE_DIR}/IrcCore/IrcProtocol
+        )
+
 set(PUB_HEADERS
         ${LibCommuni_INCLUDE_DIR}/IrcCore/irc.h
         ${LibCommuni_INCLUDE_DIR}/IrcCore/irccommand.h
@@ -50,10 +63,5 @@ target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Core Qt5::Network)
 target_include_directories(${PROJECT_NAME} PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcCore/")
 target_compile_definitions(${PROJECT_NAME} PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${PUB_HEADERS}")
-
-install(TARGETS ${PROJECT_NAME}
-        PUBLIC_HEADER 
-        LIBRARY
-        ARCHIVE
-)
+install(FILES ${PUB_HEADERS} ${CONV_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME} LIBRARY ARCHIVE)
