@@ -30,6 +30,8 @@
 #include "irccommand_p.h"
 #include "ircconnection.h"
 #include "ircmessage.h"
+#include "ircconnection_p.h"
+#include "ircconnection_p.h"
 #include "irccore_p.h"
 #include <QTextCodec>
 #include <QMetaEnum>
@@ -925,6 +927,7 @@ QDebug operator<<(QDebug debug, const IrcCommand* command)
 }
 #endif // QT_NO_DEBUG_STREAM
 
+#include "irccommand.moc"
 #include "moc_irccommand.cpp"
 
 IRC_END_NAMESPACE
