@@ -30,7 +30,7 @@ set(SOURCE_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ircusermodel.cpp
 )
 
-add_library(${PROJECT_NAME} SHARED ${PUB_HEADERS} ${PRIV_HEADERS} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC ${PUB_HEADERS} ${PRIV_HEADERS} ${SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Core Qt5::Network)
 target_include_directories(${PROJECT_NAME} PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcModel/" "${LibCommuni_INCLUDE_DIR}/IrcCore/")

@@ -75,3 +75,5 @@ qt.conf
 /tests/benchmarks/ircmessagedecoder/tst_ircmessagedecoder
 /tests/benchmarks/irctextformat/tst_irctextformat
 build/
+cmake-build-*
+.idea/
