@@ -12,7 +12,6 @@ class LibCommuniConan(ConanFile):
     generators = "cmake"
     exports_sources = "include*", "src*", "CMakeLists.txt"
 
-
     def build(self):
         cmake = CMake(self)
         cmake.configure()
@@ -23,4 +22,9 @@ class LibCommuniConan(ConanFile):
         cmake.install()
 
     def package_info(self):
+        self.cpp_info.includedirs = ['include',
+                                     'include/IrcUtil',
+                                     'include/IrcModel',
+                                     'include/IrcCore'
+                                     ]
         self.cpp_info.libs = tools.collect_libs(self)
