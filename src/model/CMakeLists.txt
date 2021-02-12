@@ -2,7 +2,7 @@
 #  Model
 # ------------------------------------------------------------------------------------------------#
 
-project(Communi_Model)
+project(Model)
 
 set(PUB_HEADERS
     ${LibCommuni_INCLUDE_DIR}/IrcModel/ircbuffer.h

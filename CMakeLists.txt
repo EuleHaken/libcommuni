@@ -15,8 +15,7 @@ find_package(Qt5 REQUIRED COMPONENTS Core Network)
 set(LibCommuni_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include/")
 set(LibCommuni_SOURCE_DIR  "${CMAKE_SOURCE_DIR}/src/")
 
-#include(pmm)
-#pmm(CONAN REMOTES BINCRAFTERS)
+set(LibCommuni_definitions "IRC_STATIC IRC_NAMESPACE=Communi")
 
 add_subdirectory(src/core)
 add_subdirectory(src/model)

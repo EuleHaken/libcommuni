@@ -2,7 +2,7 @@
 #  Util
 # ------------------------------------------------------------------------------------------------#
 
-project(Communi_Util)
+project(Util)
 
 set(PUB_HEADERS
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandparser.h

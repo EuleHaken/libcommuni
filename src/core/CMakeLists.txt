@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------------------------#
 include(GNUInstallDirs)
 
-project(Communi_Core)
+project(Core)
 
 set(PUB_HEADERS
         ${LibCommuni_INCLUDE_DIR}/IrcCore/irc.h
