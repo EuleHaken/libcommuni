@@ -2,7 +2,9 @@
 #  Util
 # ------------------------------------------------------------------------------------------------#
 
-set(UTIL_PUB_HEADERS
+project(Communi_Util)
+
+set(PUB_HEADERS
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandparser.h
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandqueue.h
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccompleter.h
@@ -11,14 +13,14 @@ set(UTIL_PUB_HEADERS
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irctextformat.h
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/ircutil.h
 )
-set(UTIL_PRIV_HEADERS
+set(PRIV_HEADERS
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandparser_p.h
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandqueue_p.h
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irclagtimer_p.h
     ${LibCommuni_INCLUDE_DIR}/IrcUtil/irctoken_p.h
 )
 
-set(UTIL_SOURCE_FILES
+set(SOURCE_FILES
     ${CMAKE_CURRENT_LIST_DIR}/irccommandparser.cpp
     ${CMAKE_CURRENT_LIST_DIR}/irccommandqueue.cpp
     ${CMAKE_CURRENT_LIST_DIR}/irccompleter.cpp
@@ -29,8 +31,17 @@ set(UTIL_SOURCE_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ircutil.cpp
 )
 
-add_library(Communi_Util SHARED ${UTIL_PUB_HEADERS} ${UTIL_PRIV_HEADERS} ${UTIL_SOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${PUB_HEADERS} ${PRIV_HEADERS} ${SOURCE_FILES})
 
-target_link_libraries(Communi_Util PUBLIC Qt5::Core Qt5::Network)
-target_include_directories(Communi_Util PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcUtil/" "${LibCommuni_INCLUDE_DIR}/IrcModel/" "${LibCommuni_INCLUDE_DIR}/IrcCore/")
-target_compile_definitions(Communi_Util PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
+target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Core Qt5::Network)
+target_include_directories(${PROJECT_NAME} PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcUtil/" "${LibCommuni_INCLUDE_DIR}/IrcModel/" "${LibCommuni_INCLUDE_DIR}/IrcCore/")
+target_compile_definitions(${PROJECT_NAME} PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
+
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${PUB_HEADERS}")
+
+install(TARGETS ${PROJECT_NAME}
+        PUBLIC_HEADER 
+        LIBRARY
+        ARCHIVE
+)
