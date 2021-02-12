@@ -46,6 +46,3 @@ add_library(Communi_Core SHARED ${CORE_PRIV_HEADERS} ${CORE_PUB_HEADERS} ${CORE_
 target_link_libraries(Communi_Core PUBLIC Qt5::Core Qt5::Network)
 target_include_directories(Communi_Core PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcCore/")
 target_compile_definitions(Communi_Core PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
-
-#set_property(TARGET Communi_Core PROPERTY AUTOMOC ON)
-#set_property(SOURCE ${CORE_SOURCE_FILES} PROPERTY SKIP_AUTOMOC ON)

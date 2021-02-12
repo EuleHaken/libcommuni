@@ -19,6 +19,8 @@ set(LibCommuni_SOURCE_DIR  "${CMAKE_SOURCE_DIR}/src/")
 #pmm(CONAN REMOTES BINCRAFTERS)
 
 add_subdirectory(src/core)
+add_subdirectory(src/model)
+add_subdirectory(src/util)
 
 
 feature_summary(WHAT ALL)

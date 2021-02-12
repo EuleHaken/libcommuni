@@ -1,0 +1,36 @@
+# ------------------------------------------------------------------------------------------------#
+#  Util
+# ------------------------------------------------------------------------------------------------#
+
+set(UTIL_PUB_HEADERS
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandparser.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandqueue.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccompleter.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irclagtimer.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/ircpalette.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irctextformat.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/ircutil.h
+)
+set(UTIL_PRIV_HEADERS
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandparser_p.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irccommandqueue_p.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irclagtimer_p.h
+    ${LibCommuni_INCLUDE_DIR}/IrcUtil/irctoken_p.h
+)
+
+set(UTIL_SOURCE_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/irccommandparser.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/irccommandqueue.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/irccompleter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/irclagtimer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ircpalette.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/irctextformat.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/irctoken.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ircutil.cpp
+)
+
+add_library(Communi_Util SHARED ${UTIL_PUB_HEADERS} ${UTIL_PRIV_HEADERS} ${UTIL_SOURCE_FILES})
+
+target_link_libraries(Communi_Util PUBLIC Qt5::Core Qt5::Network)
+target_include_directories(Communi_Util PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcUtil/" "${LibCommuni_INCLUDE_DIR}/IrcModel/" "${LibCommuni_INCLUDE_DIR}/IrcCore/")
+target_compile_definitions(Communi_Util PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
