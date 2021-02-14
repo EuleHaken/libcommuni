@@ -30,6 +30,7 @@
 #include "ircmessage.h"
 #include "irccore_p.h"
 #include "irc.h"
+#include <memory>
 
 IRC_BEGIN_NAMESPACE
 

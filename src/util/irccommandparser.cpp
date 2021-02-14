@@ -31,6 +31,7 @@
 #include "irctoken_p.h"
 #include "irccore_p.h"
 #include <climits>
+#include <memory>
 
 IRC_BEGIN_NAMESPACE
 

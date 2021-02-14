@@ -44,6 +44,7 @@
 #include <QRegExp>
 #include <QUrl>
 #include "irc.h"
+#include <memory>
 
 IRC_BEGIN_NAMESPACE
 
