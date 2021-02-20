@@ -11,8 +11,8 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5 REQUIRED COMPONENTS Core Network)
 
-set(LibCommuni_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include/")
-set(LibCommuni_SOURCE_DIR  "${CMAKE_SOURCE_DIR}/src/")
+set(LibCommuni_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include/")
+set(LibCommuni_SOURCE_DIR  "${CMAKE_CURRENT_LIST_DIR}/src/")
 
 set(LibCommuni_definitions "IRC_STATIC IRC_NAMESPACE=Communi")
 
