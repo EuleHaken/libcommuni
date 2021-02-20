@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-include(FeatureSummary)
- 
+
 project(LibCommuni VERSION 3.6.0)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -22,4 +21,7 @@ add_subdirectory(src/model)
 add_subdirectory(src/util)
 
 
-feature_summary(WHAT ALL)
+if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    include(FeatureSummary)
+    feature_summary(WHAT ALL)
+endif ()
