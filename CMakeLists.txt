@@ -20,6 +20,11 @@ add_subdirectory(src/core)
 add_subdirectory(src/model)
 add_subdirectory(src/util)
 
+add_library(LibCommuni)
+
+target_link_libraries(LibCommuni Core Model Util)
+
+add_library(LibCommuni::LibCommuni ALIAS LibCommuni)
 
 if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     include(FeatureSummary)
