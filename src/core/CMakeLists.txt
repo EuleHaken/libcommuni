@@ -56,6 +56,10 @@ set(SOURCE_FILES
         #${LibCommuni_SOURCE_DIR}/3rdparty/mozilla/rdf_utils.c
         )
 
+# Skip running moc for ircfilter.cpp as it does not need any moccing, but automoc finds a Q_OBJECT line in the comment in ircfilter.cpp
+set_property(SOURCE ircfilter.cpp PROPERTY SKIP_AUTOMOC ON)
+# We cannot skip running moc for irccommand.cpp because it has IRC_OBJECT defined in its header file and it needs moccing, however, there's a Q_OBJECT comment in the irccommand.cpp file which I've had to "break" to make this work
+# set_property(SOURCE irccommand.cpp PROPERTY SKIP_AUTOMOC ON)
 
 add_library(${PROJECT_NAME} STATIC ${PRIV_HEADERS} ${PUB_HEADERS} ${SOURCE_FILES})
 
