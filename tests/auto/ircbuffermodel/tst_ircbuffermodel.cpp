@@ -76,10 +76,10 @@ void tst_IrcBufferModel::testBufferInit()
     IrcBufferModel model(connection);
     model.setSortMethod(Irc::SortByTitle);
     IrcBuffer* buffer1 = new IrcBuffer(&model);
-    buffer1->setName("1");
+    buffer1->setName(QStringLiteral("1"));
     model.add(buffer1);
     IrcBuffer* buffer2 = new IrcBuffer(&model);
-    buffer2->setName("2");
+    buffer2->setName(QStringLiteral("2"));
     model.add(buffer2);
 }
 
@@ -105,7 +105,7 @@ void tst_IrcBufferModel::testAddRemove()
     QVERIFY(channelsSpy.isValid());
 
     // IrcBuffer* IrcBufferModel::add(const QString& title)
-    IrcBuffer* first = model.add("first");
+    IrcBuffer* first = model.add(QStringLiteral("first"));
     QCOMPARE(model.count(), 1);
     QVERIFY(!model.isEmpty());
     QCOMPARE(model.get(0), first);
@@ -137,7 +137,7 @@ void tst_IrcBufferModel::testAddRemove()
 
     // void IrcBufferModel::add(IrcBuffer* buffer)
     IrcBuffer* second = new IrcBuffer(&model);
-    second->setName("second");
+    second->setName(QStringLiteral("second"));
     model.add(second);
     QCOMPARE(model.count(), 2);
     QVERIFY(!model.isEmpty());
@@ -186,7 +186,7 @@ void tst_IrcBufferModel::testAddRemove()
     QCOMPARE(channelsSpy.count(), 0);
 
     // void IrcBufferModel::remove(const QString& title)
-    model.remove("first");
+    model.remove(QStringLiteral("first"));
     QCOMPARE(model.count(), 0);
     QVERIFY(model.isEmpty());
     QVERIFY(!model.find("first"));
@@ -214,9 +214,9 @@ void tst_IrcBufferModel::testSorting()
     waitForOpened();
     waitForWritten(tst_IrcData::welcome());
 
-    IrcBuffer* b = staticModel.add("b");
-    IrcBuffer* c = staticModel.add("#c");
-    IrcBuffer* a = staticModel.add("#a");
+    IrcBuffer* b = staticModel.add(QStringLiteral("b"));
+    IrcBuffer* c = staticModel.add(QStringLiteral("#c"));
+    IrcBuffer* a = staticModel.add(QStringLiteral("#a"));
 
     QList<IrcBuffer*> buffers =  QList<IrcBuffer*>() << b << c << a;
     QCOMPARE(staticModel.buffers(), buffers);
@@ -266,9 +266,9 @@ void tst_IrcBufferModel::testSorting()
     staticModel.sort(0, Qt::AscendingOrder);
     QCOMPARE(staticModel.buffers(), buffers);
 
-    b = dynamicModel.add("b");
-    c = dynamicModel.add("#c");
-    a = dynamicModel.add("#a");
+    b = dynamicModel.add(QStringLiteral("b"));
+    c = dynamicModel.add(QStringLiteral("#c"));
+    a = dynamicModel.add(QStringLiteral("#a"));
 
     // DYNAMIC - BY NAME - ASCENDING
     buffers =  QList<IrcBuffer*>() << a << b << c;
@@ -304,10 +304,10 @@ void tst_IrcBufferModel::testClear()
     QVERIFY(waitForOpened());
     QVERIFY(waitForWritten(tst_IrcData::welcome()));
 
-    QPointer<IrcBuffer> a = model.add("#a");
-    QPointer<IrcBuffer> b = model.add("#b");
-    QPointer<IrcBuffer> c = model.add("c");
-    QPointer<IrcBuffer> d = model.add("d");
+    QPointer<IrcBuffer> a = model.add(QStringLiteral("#a"));
+    QPointer<IrcBuffer> b = model.add(QStringLiteral("#b"));
+    QPointer<IrcBuffer> c = model.add(QStringLiteral("c"));
+    QPointer<IrcBuffer> d = model.add(QStringLiteral("d"));
 
     QSignalSpy countSpy(&model, SIGNAL(countChanged(int)));
     QSignalSpy buffersSpy(&model, SIGNAL(buffersChanged(QList<IrcBuffer*>)));
@@ -444,8 +444,8 @@ void tst_IrcBufferModel::testClear()
     QCOMPARE(modelAboutToBeResetSpy.count(), 0);
     QCOMPARE(modelResetSpy.count(), 0);
 
-    QPointer<IrcBuffer> e = model.add("e");
-    QPointer<IrcBuffer> f = model.add("f");
+    QPointer<IrcBuffer> e = model.add(QStringLiteral("e"));
+    QPointer<IrcBuffer> f = model.add(QStringLiteral("f"));
 
     e->setPersistent(true);
     f->setPersistent(true);
@@ -670,7 +670,7 @@ void tst_IrcBufferModel::testChanges()
     int previousIndex = -1;
 
     QList<IrcBuffer*> buffers = QList<IrcBuffer*>() << communi;
-    QStringList channels = QStringList() << "#communi";
+    QStringList channels = QStringList() << QStringLiteral("#communi");
 
     int nextIndex = buffers.indexOf(communi);
 
@@ -740,7 +740,7 @@ void tst_IrcBufferModel::testChanges()
     previousIndex = -1;
 
     buffers = QList<IrcBuffer*>() << communi << ChanServ;
-    channels = QStringList() << "#communi";
+    channels = QStringList() << QStringLiteral("#communi");
 
     nextIndex = buffers.indexOf(ChanServ);
 
@@ -807,21 +807,21 @@ void tst_IrcBufferModel::testChanges()
     QCOMPARE(rowsAboutToBeInsertedSpy.count(), rowsAboutToBeInsertedCount);
     QCOMPARE(rowsInsertedSpy.count(), rowsInsertedCount);
 
-    QVERIFY(waitForWritten(":communi!communi@hidd.en JOIN :#freenode"));
+    QVERIFY(waitForWritten(":communi!communi@hidd.en JOIN :#libera"));
     QCOMPARE(messageIgnoredSpy.count(), messageIgnoredCount);
 
-    QPointer<IrcChannel> freenode = bufferModel.get(2)->toChannel();
-    QVERIFY(freenode);
-    QCOMPARE(freenode->title(), QString("#freenode"));
-    QCOMPARE(freenode->name(), QString("freenode"));
-    QCOMPARE(freenode->prefix(), QString("#"));
+    QPointer<IrcChannel> libera = bufferModel.get(2)->toChannel();
+    QVERIFY(libera);
+    QCOMPARE(libera->title(), QString("#libera"));
+    QCOMPARE(libera->name(), QString("libera"));
+    QCOMPARE(libera->prefix(), QString("#"));
 
     previousIndex = -1;
 
-    buffers = QList<IrcBuffer*>() << communi << ChanServ << freenode;
-    channels = QStringList() << "#communi" << "#freenode";
+    buffers = QList<IrcBuffer*>() << communi << ChanServ << libera;
+    channels = QStringList() << QStringLiteral("#communi") << QStringLiteral("#libera");
 
-    nextIndex = buffers.indexOf(freenode);
+    nextIndex = buffers.indexOf(libera);
 
     QCOMPARE(bufferModel.count(), buffers.count());
     QCOMPARE(bufferModel.buffers(), buffers);
@@ -837,10 +837,10 @@ void tst_IrcBufferModel::testChanges()
     QCOMPARE(countChangedSpy.last().at(0).toInt(), buffers.count());
 
     QCOMPARE(aboutToBeAddedSpy.count(), ++aboutToBeAddedCount);
-    QCOMPARE(aboutToBeAddedSpy.last().at(0).value<IrcBuffer*>(), freenode.data());
+    QCOMPARE(aboutToBeAddedSpy.last().at(0).value<IrcBuffer*>(), libera.data());
 
     QCOMPARE(addedSpy.count(), ++addedCount);
-    QCOMPARE(addedSpy.last().at(0).value<IrcBuffer*>(), freenode.data());
+    QCOMPARE(addedSpy.last().at(0).value<IrcBuffer*>(), libera.data());
 
     QCOMPARE(buffersChangedSpy.count(), ++buffersChangedCount);
     QCOMPARE(buffersChangedSpy.last().at(0).value<QList<IrcBuffer*> >(), buffers);
@@ -869,8 +869,8 @@ void tst_IrcBufferModel::testChanges()
     previousIndex = -1;
 
     // Irc::SortByTitle
-    buffers = QList<IrcBuffer*>() << communi << freenode << ChanServ;
-    channels = QStringList() << "#communi" << "#freenode";
+    buffers = QList<IrcBuffer*>() << communi << libera << ChanServ;
+    channels = QStringList() << QStringLiteral("#communi") << QStringLiteral("#libera");
 
     nextIndex = -1;
 
@@ -895,8 +895,8 @@ void tst_IrcBufferModel::testChanges()
     previousIndex = -1;
 
     // Irc::SortByName, Qt::DescendingOrder
-    buffers = QList<IrcBuffer*>() << freenode << communi << ChanServ;
-    channels = QStringList() << "#communi" << "#freenode";
+    buffers = QList<IrcBuffer*>() << libera << communi << ChanServ;
+    channels = QStringList() << QStringLiteral("#communi") << QStringLiteral("#libera");
 
     nextIndex = -1;
 
@@ -922,8 +922,8 @@ void tst_IrcBufferModel::testChanges()
     previousIndex = -1;
 
     // Irc::SortByName, Qt::DescendingOrder
-    buffers = QList<IrcBuffer*>() << qtassistant << freenode << communi << ChanServ;
-    channels = QStringList() << "#communi" << "#freenode";
+    buffers = QList<IrcBuffer*>() << qtassistant << libera << communi << ChanServ;
+    channels = QStringList() << QStringLiteral("#communi") << QStringLiteral("#libera");
 
     nextIndex = buffers.indexOf(qtassistant);
 
@@ -991,8 +991,8 @@ void tst_IrcBufferModel::testChanges()
     previousIndex = buffers.indexOf(qtassistant);
 
     // Irc::SortByName, Qt::DescendingOrder
-    buffers = QList<IrcBuffer*>() << freenode << communi << ChanServ << qtassistant; // qtassistant=assistant
-    channels = QStringList() << "#communi" << "#freenode";
+    buffers = QList<IrcBuffer*>() << libera << communi << ChanServ << qtassistant; // qtassistant=assistant
+    channels = QStringList() << QStringLiteral("#communi") << QStringLiteral("#libera");
 
     nextIndex = buffers.indexOf(qtassistant);
 
@@ -1064,8 +1064,8 @@ void tst_IrcBufferModel::testChanges()
     QVERIFY(!communi);
 
     // Irc::SortByName, Qt::DescendingOrder
-    buffers = QList<IrcBuffer*>() << freenode << ChanServ << qtassistant; // qtassistant=assistant
-    channels = QStringList() << "#freenode";
+    buffers = QList<IrcBuffer*>() << libera << ChanServ << qtassistant; // qtassistant=assistant
+    channels = QStringList() << QStringLiteral("#libera");
 
     nextIndex = buffers.indexOf(communi);
 
@@ -1109,31 +1109,31 @@ void tst_IrcBufferModel::testChanges()
     QCOMPARE(rowsInsertedSpy.count(), rowsInsertedCount);
 
     // note: implicit replies are not targeted since 3.5
-    waitForWritten(":moorcock.freenode.net 324 communi #freenode +s");
+    waitForWritten(":moorcock.libera.chat 324 communi #libera +s");
     QCOMPARE(messageIgnoredSpy.count(), ++messageIgnoredCount);
-    QCOMPARE(freenode->mode(), QString("+s"));
+    QCOMPARE(libera->mode(), QString("+s"));
 
-    QVERIFY(waitForWritten(":jpnurmi!jpnurmi@qt/jpnurmi KICK #freenode communi"));
+    QVERIFY(waitForWritten(":jpnurmi!jpnurmi@qt/jpnurmi KICK #libera communi"));
     QCOMPARE(messageIgnoredSpy.count(), messageIgnoredCount);
 
-    QVERIFY(freenode); // deleteLater()'d
+    QVERIFY(libera); // deleteLater()'d
 
     QCOMPARE(aboutToBeRemovedSpy.count(), ++aboutToBeRemovedCount);
-    QCOMPARE(aboutToBeRemovedSpy.last().at(0).value<IrcBuffer*>(), freenode.data());
+    QCOMPARE(aboutToBeRemovedSpy.last().at(0).value<IrcBuffer*>(), libera.data());
 
     QCOMPARE(removedSpy.count(), ++removedCount);
-    QCOMPARE(removedSpy.last().at(0).value<IrcBuffer*>(), freenode.data());
+    QCOMPARE(removedSpy.last().at(0).value<IrcBuffer*>(), libera.data());
 
-    previousIndex = buffers.indexOf(freenode);
+    previousIndex = buffers.indexOf(libera);
 
-    QCoreApplication::sendPostedEvents(freenode, QEvent::DeferredDelete);
-    QVERIFY(!freenode);
+    QCoreApplication::sendPostedEvents(libera, QEvent::DeferredDelete);
+    QVERIFY(!libera);
 
     // Irc::SortByName, Qt::DescendingOrder
     buffers = QList<IrcBuffer*>() << ChanServ << qtassistant; // qtassistant=assistant
     channels = QStringList();
 
-    nextIndex = buffers.indexOf(freenode);
+    nextIndex = buffers.indexOf(libera);
 
     QCOMPARE(bufferModel.count(), buffers.count());
     QCOMPARE(bufferModel.buffers(), buffers);
@@ -1272,7 +1272,7 @@ void tst_IrcBufferModel::testActive()
     QVERIFY(waitForWritten(":communi!communi@hidd.en JOIN :#communi"));
 
     IrcChannel* channel = bufferModel.get(0)->toChannel();
-    IrcBuffer* query = bufferModel.add("qtassistant");
+    IrcBuffer* query = bufferModel.add(QStringLiteral("qtassistant"));
 
     channel->setPersistent(true);
     query->setPersistent(true);
@@ -1346,9 +1346,9 @@ void tst_IrcBufferModel::testRoles()
 void tst_IrcBufferModel::testAIM()
 {
     IrcBufferModel bufferModel(connection);
-    IrcBuffer* a = bufferModel.add("#a");
-    IrcBuffer* b = bufferModel.add("#b");
-    IrcBuffer* c = bufferModel.add("c");
+    IrcBuffer* a = bufferModel.add(QStringLiteral("#a"));
+    IrcBuffer* b = bufferModel.add(QStringLiteral("#b"));
+    IrcBuffer* c = bufferModel.add(QStringLiteral("c"));
     IrcBuffer* o = nullptr;
 
     QAbstractItemModel* aim = &bufferModel;
@@ -1426,13 +1426,13 @@ public slots:
     QVariant createBuffer(const QVariant& title)
     {
         IrcBuffer* buffer = IrcBufferModel::createBuffer(title.toString());
-        buffer->setObjectName("QML buffer");
+        buffer->setObjectName(QStringLiteral("QML buffer"));
         return QVariant::fromValue(buffer);
     }
     QVariant createChannel(const QVariant& title)
     {
         IrcChannel* channel = IrcBufferModel::createChannel(title.toString());
-        channel->setObjectName("QML channel");
+        channel->setObjectName(QStringLiteral("QML channel"));
         return QVariant::fromValue(channel);
     }
 };
@@ -1482,30 +1482,30 @@ void tst_IrcBufferModel::testMonitor()
 
     connection->open();
     QVERIFY(waitForOpened());
-    QVERIFY(waitForWritten(tst_IrcData::welcome("freenode")));
+    QVERIFY(waitForWritten(tst_IrcData::welcome("libera")));
     QVERIFY(connection->network()->numericLimit(IrcNetwork::MonitorCount) > 0);
 
     filter.commands.clear();
 
-    IrcBuffer* buffer = model.add("jirssi");
+    IrcBuffer* buffer = model.add(QStringLiteral("jirssi"));
     QVERIFY(!buffer->isActive());
     QCOMPARE(filter.commands.count(), 1);
     QCOMPARE(filter.commands.last(), QString("MONITOR + jirssi"));
 
-    QVERIFY(waitForWritten(":card.freenode.net 730 * :jirssi!~jpnurmi@88.95.51.136"));
+    QVERIFY(waitForWritten(":card.libera.chat 730 * :jirssi!~jpnurmi@88.95.51.136"));
     QVERIFY(buffer->isActive());
 
-    QVERIFY(waitForWritten(":card.freenode.net 731 jipsu :jirssi"));
+    QVERIFY(waitForWritten(":card.libera.chat 731 jipsu :jirssi"));
     QVERIFY(!buffer->isActive());
 
-    model.remove("jirssi");
+    model.remove(QStringLiteral("jirssi"));
     QCOMPARE(filter.commands.count(), 2);
     QCOMPARE(filter.commands.last(), QString("MONITOR - jirssi"));
 
     filter.commands.clear();
 
     // don't monitor channels
-    buffer = model.add("#channel");
+    buffer = model.add(QStringLiteral("#channel"));
     QCOMPARE(model.channels(), QStringList() << "#channel");
     QVERIFY(filter.commands.isEmpty());
     delete buffer;
